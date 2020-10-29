@@ -12,3 +12,8 @@ So I tried WebView , but also a NOGO .
 So I switched to WebView2 and sarted learnng C# . And I got to the part where it can't doesn't yet handle the HtmlDOM . So I am tried the InjectJavascript business , But it is now a backBurner WIP . 
 I am putting all my efforts into developing a nodejs , Eletron , 'Kid Safe Browser' . 
 Please , excuse my unorthedox use of github , until I master it . I put my current problem in a file called CurrentProblem . Thanks 
+
+'browser-wip.js' is the code I am currently Wip/Debugging . 
+In this code you will see lots of these write-to-console 'console.log("vm  " + " readSafeLinks() 1 " ' , 
+these are my method of getting to know the program , studying the program Flow . 
+"
