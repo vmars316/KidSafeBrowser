@@ -1,7 +1,12 @@
 window.onresize = doLayout;
 var isLoading = false;
+var vi = 0;   var vii = 0; 
+var sitesArray = [] ;  
+var linksArray = [] ;
+var NavigateToo = "" ;						  
+var SafeSite = false ; 
 
-onload = function() {
+onload = function() {  // ends at line ~ 154
   console.log("vm  "+"onload");
   var webview = document.querySelector('webview');
   doLayout();
@@ -149,12 +154,54 @@ onload = function() {
     find.style.position = "absolute";
   }
 };
-
-function navigateTo(url) {
+// NavigateToUrl 
+function navigateTo(url) { // vmCheck here for safe links 
   console.log("vm  "+" navigateTo url ");
-  resetExitedState();
-  document.querySelector('webview').src = url;
+  NavigateToo = url;
+  WholeSiteLinks(NavigateToo);
+  if (SafeSite = true){
+//  resetExitedState();
+//  document.querySelector('webview').src = url;
+	  event.preventDefault();
+  }else{
+	  event.preventDefault();
+  }
 }
+
+// =================================
+function WholeSiteLinks(NavigateToo) {
+    SafeSite = false ;
+    for (var i = 0; i < sitesArray.length; i++) {
+        if (sitesArray[i] == NavigateToo) {
+            SafeSite = true ;
+			alert("Safe Site Lets Navigate  " + "NavigateToo = " + NavigateToo);
+			break ;
+		}else {
+            SafeSite = false ;
+        } 
+	}
+	if  (SafeSite == false) { 
+			alert("Whole NOT Safe Site , Check linksArray  "+ "NavigateToo = " + NavigateToo);
+            SpecificSiteLinks(NavigateToo);
+	}
+}
+
+function SpecificSiteLinks(NavigateToo) {
+    SafeSite = false ;
+    for (var i = 0; i < linksArray.length; i++) {
+        if (sitesArray[i] == NavigateToo) {
+            SafeSite = true ;
+			alert("Safe Site Lets Navigate  " + "NavigateToo = " + NavigateToo);
+			break ;
+		}else {
+            SafeSite = false ;
+        }	
+     }
+		if  (SafeSite == false) { 
+			alert("Specificate NOT Safe Site , CANCEL Navigate "+ "NavigateToo = " + NavigateToo);
+	}
+}
+// =================================
 
 function doLayout() {
   var webview = document.querySelector('webview');
@@ -268,6 +315,7 @@ function handleLoadCommit() {
 function handleLoadStart(event) {
   console.log("vm  "+" handleLoadStart ");
   document.body.classList.add('loading');
+  readSafeLinks();  
   isLoading = true;
 
   resetExitedState();
@@ -275,21 +323,17 @@ function handleLoadStart(event) {
     return;
   }
 
-	readSafeLinks();  // does not work here
   document.querySelector('#location').value = event.url;
-}
+}   // function handleLoadStart
 
-	
-function readSafeLinks() {
+// vmFunction
+function readSafeLinks() {  // called from function handleLoadStart(event)
 const fs = require('fs');
 const readline = require('readline');
 var fileName = "ThisLinkOk.txt" ;
-var i = 0  ;  
-var sitesArray = [] ;  
-var linksArray = [] ;
   console.log("vm  "+" readSafeLinks() 1 ");		
-for (i = 0; i < 2; i++) {
-	if  (i > 0) {
+for (vii = 0; vii < 2; vii++) {
+	if  (vii > 0) {
 	fileName = "ThisSiteOk.txt";
   console.log("vm  "+" readSafeLinks() 2 ");		
 	}
@@ -301,15 +345,15 @@ const rl = readline.createInterface({
 rl.on('line', (line) => {
   console.log(`Line from file: ${line}`); 
   
-  if (i = 0) {
+  if (vii == 0) {
 	  sitesArray.push(line);
   }
-  if (i = 0) {
+  if (vii == 0) {
 	  linksArray.push(line);
   }
 });
 }
-}	
+}  // function readSafeLinks
 
 function handleLoadStop(event) {
   console.log("vm  "+" handleLoadStop ");
@@ -402,3 +446,4 @@ function closeBoxes() {
   closeZoomBox();
   closeFindBox();
 }
+
