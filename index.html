@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button id="back"><-</button>
+        <button id="forward">-></button>
+        <input type="url" id="url">
+        <button id="go">Go</button>
+        <button id="devtools">Toggle devtools</button>
+    </header>
+</body>
+<script>
+    document.getElementById('back')
+        .addEventListener('click', () => webview.back())
+    document.getElementById('forward')
+        .addEventListener('click', () => webview.forward())
+    document.getElementById('go')
+        .addEventListener('click', () => webview.loadURL(document.getElementById('url').value))
+    document.getElementById('devtools')
+        .addEventListener('click', () => webview.toggleDevtools())
+</script>
+</html>
